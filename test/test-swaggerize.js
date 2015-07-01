@@ -14,7 +14,6 @@ test('swaggerize', function (t) {
     server.use(restify.bodyParser());
 
     swaggerize(server, {
-        version: 'v1',
         api: require('./fixtures/defs/pets.json'),
         handlers: path.join(__dirname, 'fixtures/handlers')
     });
@@ -23,8 +22,8 @@ test('swaggerize', function (t) {
     t.test('api', function (t) {
         t.plan(6);
 
-        t.ok(server.hasOwnProperty('swaggerv1'), 'app has swagger property.');
-        t.ok(server.swagger, 'swaggerv1 is an object.');
+        t.ok(server.hasOwnProperty('swagger'), 'app has swagger property.');
+        t.ok(server.swagger, 'swagger is an object.');
 
         t.ok(server.swagger.hasOwnProperty('api'), 'app.swagger has api property.');
         t.ok(server.swagger.api, 'app.swagger.api is an object.');
