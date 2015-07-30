@@ -18,7 +18,6 @@ test('swaggerize', function (t) {
         handlers: path.join(__dirname, 'fixtures/handlers')
     });
 
-
     t.test('api', function (t) {
         t.plan(6);
 
@@ -102,37 +101,52 @@ test('swaggerize', function (t) {
 test('input validation', function (t) {
 
     var server = restify.createServer();
+    var server2 = restify.createServer();
 
     server.use(restify.bodyParser());
     server.use(restify.queryParser());
+    server2.use(restify.bodyParser());
+    server2.use(restify.queryParser());
 
-    var options = {
-        api: require('./fixtures/defs/pets.json'),
-        handlers: {
-            'pets': {
-                '{id}': {
-                    $get: function (req, res) {
-
-                    },
-                    $delete: function (req, res) {
-                        res.send(typeof req.body);
-                    }
-                },
+    var handlers = {
+        'pets': {
+            '{id}': {
                 $get: function (req, res) {
-                    res.json({
-                        id: 0,
-                        name: 'Cat',
-                        tags: req.query.tags
-                    });
+
                 },
-                $post: function (req, res) {
-                    res.send(req.body);
+                $delete: function (req, res) {
+                    res.send(typeof req.body);
                 }
+            },
+            $get: function (req, res) {
+                res.json({
+                    id: 0,
+                    name: 'Cat',
+                    tags: req.query.tags
+                });
+            },
+            $post: function (req, res) {
+                res.send(req.body);
             }
         }
     };
 
+    var options = {
+        api: require('./fixtures/defs/pets.json'),
+        handlers: handlers
+    };
+
+    var options2 = {
+        api: require('./fixtures/defs/pets.json'),
+        handlers: handlers,
+        validateErrorHandler: function(error, req, res, next) {
+            res.send(error);
+            next();
+        }
+    };
+
     swaggerize(server, options);
+    swaggerize(server2, options2);
 
     t.test('good query', function (t) {
         t.plan(3);
@@ -150,6 +164,15 @@ test('input validation', function (t) {
         request(server).post('/v1/petstore/pets').send('').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 400, '400 status.');
+        });
+    });
+
+    t.test('missing body with custom validationErorrHandler', function (t) {
+        t.plan(2);
+
+        request(server2).post('/v1/petstore/pets').send('').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 500, '500 status.');
         });
     });
 
