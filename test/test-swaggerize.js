@@ -154,7 +154,7 @@ test('input validation', function (t) {
 
         request(server).post('/v1/petstore/pets').send('').end(function (error, response) {
             t.ok(!error, 'no error.');
-            t.strictEqual(response.statusCode, 400, '400 status.');
+            t.strictEqual(response.statusCode, 500, '500 status.');
         });
     });
 

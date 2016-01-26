@@ -27,25 +27,25 @@
   },
   "bugs": "http://github.com/bardzusny/swaggerize-restify/issues",
   "engines": {
-    "node": "0.10.x"
+    "node": ">=0.10.x"
   },
   "dependencies": {
-    "async": "^0.9.0",
-    "caller": "^0.0.1",
-    "core-util-is": "^1.0.1",
+    "async": "^1.5.2",
+    "caller": "^1.0.1",
+    "core-util-is": "^1.0.2",
     "debuglog": "^1.0.1",
-    "js-yaml": "^3.2.6",
-    "swaggerize-routes": "^1.0.0"
+    "js-yaml": "^3.5.2",
+    "swaggerize-routes": "^1.0.6"
   },
   "peerDependencies": {
-    "restify": "^3.0.3"
+    "restify": "^4.0.3"
   },
   "devDependencies": {
-    "tape": "^2.4.2",
-    "istanbul": "^0.2.3",
-    "jshint": "^2.4.1",
-    "restify": "^3.0.3",
-    "supertest": "^0.13.0"
+    "istanbul": "^0.4.2",
+    "jshint": "^2.9.1",
+    "restify": "^4.0.3",
+    "supertest": "^1.1.0",
+    "tape": "^4.4.0"
   },
   "scripts": {
     "test": "tape test/*.js",
