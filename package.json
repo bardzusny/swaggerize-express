@@ -4,9 +4,8 @@
   "main": "./lib/index",
   "repository": {
     "type": "git",
-    "url": "git://github.com/bardzusny/swaggerize-restify.git"
+    "url": "git://github.com/icemobilelab/swaggerize-restify.git"
   },
-  "bugs": "http://github.com/bardzusny/swaggerize-restify/issues",
   "engines": {
     "node": "4.4.5"
   },
